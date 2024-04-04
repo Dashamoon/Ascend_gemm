@@ -89,6 +89,25 @@ public:
      */
     bool CopyOutput();
 
+    /**
+    * Multiplication matrix on Host 
+    * A - n*k, B - m*k, Result - n*m 
+    */
+    template<typename T>
+    bool MulMatrixHost(T *MatrixA, T *MatrixB, T *MatrixResult, int n, int m, int k);
+
+    /**
+    *  Computing Frobenius norm for matrix  
+    */
+    template<typename T>
+    T NormForMatrix(T *Matrix, int size);
+
+    /**
+    * Computing Relative error 
+    */
+    template<typename T>
+    T RelError(T *MatrixA, T *MatrixB, T *MatrixC, int n, int m, int k);
+
 private:
     uint8_t *devMatrixA_ = nullptr;
     uint8_t *devMatrixB_ = nullptr;

@@ -360,3 +360,42 @@ void GemmRunner::PrintMatrixC()
 
     PrintMatrix(hostMatrixC_, outputType_, m_, n_);
 }
+template<typename T>
+bool GemmRunner::MulMatrixHost(T *MatrixA, T *MatrixB, T *MatrixResult, int n, int m, int k){
+    //A - n*k, B - m*k, C - n*m
+    if(MatrixResult == NULL){
+        reutrn false;
+    }else{
+        for(int i = 0; i < n*m; i++){
+            MatrixResult[i] = 0;
+        }
+        for (int j = 0; j < m; j++) {
+            for (int i = 0; i < n; i++) {
+                for (int l = 0; l < k; l++) {
+                    C[n * i + j] += A[n * i + l] * B[l * k + j];
+                }
+            }
+        }
+        return true;
+    }
+}
+
+template<typename T>
+T GemmRunner::NormForMatrix(T *Matrix, int size){
+    T s = 0;
+    for (int i = 0; i < size; i++) {
+        s += Matrix[i] * Matrix[i];
+    }
+    s = sqrt(s);
+    return s;
+}
+
+template<typename T>
+T GemmRunner::RelError(T *MatrixA, T *MatrixB, T *MatrixAB, int n, int m, int k){
+    T *MatrixHostAB = new T[n*m];
+    if(!MulMatrixHost(MatrixA, MatrixB, MatrixHostAB)){
+        //error
+    }
+
+
+}
